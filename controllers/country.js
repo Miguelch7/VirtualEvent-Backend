@@ -61,8 +61,34 @@ const createCountry = async (req, res) => {
   });
 };
 
+const updateCountry = async (req, res) => {
+
+  let country;
+  const { id } = req.params;
+  const { name, tag } = req.body;
+
+  try {
+    country = await Country.findByIdAndUpdate(id, {
+      name,
+      tag: tag.toUpperCase()
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: 'Something went wrong, the server was unable to complete your request'
+    })
+  }
+
+  country.name = name;
+  country.tag = tag;
+
+  res.status(200).json({
+    country
+  });
+};
+
 module.exports = {
   getAllCountries,
   getOneCountry,
-  createCountry
+  createCountry,
+  updateCountry
 }
