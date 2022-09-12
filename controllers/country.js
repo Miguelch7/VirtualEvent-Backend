@@ -78,6 +78,12 @@ const updateCountry = async (req, res) => {
     })
   };
 
+  if (!country) {
+    return res.status(404).json({
+      msg: 'Country does not exist'
+    });
+  };
+
   country.name = name;
   country.tag = tag;
 
