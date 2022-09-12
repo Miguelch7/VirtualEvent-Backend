@@ -106,9 +106,34 @@ const updateAttendee = async (req, res) => {
   });
 };
 
+const deleteAttendee = async (req, res) => {
+  
+  let attendee;
+  const { id } = req.params;
+  
+  try {
+    attendee = await Attendee.findByIdAndDelete(id);
+  } catch (error) {
+    return res.status(500).json({
+      msg: 'Something went wrong, the server was unable to complete your request'
+    })
+  };
+
+  if (!attendee) {
+    return res.status(404).json({
+      msg: 'Attendee does not exist'
+    });
+  };
+
+  res.status(200).json({
+    msg: 'Attendee has been deleted successfully'
+  });
+};
+
 module.exports = {
   getAllAttendees,
   getOneAttendee,
   createAttendee,
-  updateAttendee
+  updateAttendee,
+  deleteAttendee
 };

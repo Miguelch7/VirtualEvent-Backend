@@ -6,7 +6,8 @@ const {
   getAllAttendees,
   getOneAttendee,
   createAttendee,
-  updateAttendee
+  updateAttendee,
+  deleteAttendee
 } = require('../controllers/attendee');
 
 const router = Router();
@@ -41,5 +42,10 @@ router.put('/:id', [
   check('job', 'Job is required'),
   validateFields
 ], updateAttendee);
+
+router.delete('/:id', [
+  check('id', 'Id is not valid').isMongoId(),
+  validateFields
+], deleteAttendee);
 
 module.exports = router;
