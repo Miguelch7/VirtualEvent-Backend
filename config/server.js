@@ -1,4 +1,5 @@
 const express = require('express');
+const { dbConnection } = require('./db');
 
 class Server {
 
@@ -6,8 +7,13 @@ class Server {
     this.app = express();
     this.port = process.env.SERVER_PORT || 8080;
 
+    this.connectDB();
     this.middlewares();
     this.routes();
+  }
+
+  async connectDB() {
+    await dbConnection();
   }
 
   middlewares() {
