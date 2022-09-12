@@ -8,6 +8,7 @@ class Server {
     this.port = process.env.SERVER_PORT || 8080;
 
     this.paths = {
+      attendees: '/api/attendees',
       countries: '/api/countries'
     }
 
@@ -25,6 +26,7 @@ class Server {
   }
 
   routes() {
+    this.app.use(this.paths.attendees, require('../routes/attendees'));
     this.app.use(this.paths.countries, require('../routes/countries'));
   }
 
