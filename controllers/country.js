@@ -1,5 +1,21 @@
 const Country = require('../models/country');
 
+const getAllCountries = async (req, res) => {
+  let countries = [];
+
+  try {
+    countries = await Country.find();
+  } catch (error) {
+    return res.status(500).json({
+      msg: 'Something went wrong, the server was unable to complete your request'
+    });
+  }
+
+  res.status(200).json({
+    countries
+  });
+}
+
 const createCountry = async (req, res) => {
   
   let country = {};
@@ -22,5 +38,6 @@ const createCountry = async (req, res) => {
 };
 
 module.exports = {
+  getAllCountries,
   createCountry
 }
