@@ -31,7 +31,7 @@ const getOneCountry = async (req, res) => {
 
   if (!country) {
     return res.status(404).json({
-      msg: 'Category does not exist'
+      msg: 'Country does not exist'
     });
   };
 
@@ -76,7 +76,7 @@ const updateCountry = async (req, res) => {
     return res.status(500).json({
       msg: 'Something went wrong, the server was unable to complete your request'
     })
-  }
+  };
 
   country.name = name;
   country.tag = tag;
@@ -86,9 +86,34 @@ const updateCountry = async (req, res) => {
   });
 };
 
+const deleteCountry = async (req, res) => {
+  
+  let country;
+  const { id } = req.params;
+  
+  try {
+    country = await Country.findByIdAndDelete(id);
+  } catch (error) {
+    return res.status(500).json({
+      msg: 'Something went wrong, the server was unable to complete your request'
+    })
+  };
+
+  if (!country) {
+    return res.status(404).json({
+      msg: 'Country does not exist'
+    });
+  };
+
+  res.status(200).json({
+    msg: 'Country has been deleted successfully'
+  });
+};
+
 module.exports = {
   getAllCountries,
   getOneCountry,
   createCountry,
-  updateCountry
+  updateCountry,
+  deleteCountry
 }
