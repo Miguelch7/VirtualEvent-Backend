@@ -2,9 +2,14 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 const { countryExists, emailExists } = require('../helpers/dbValidators');
 const { validateFields } = require('../middlewares/validateFields');
-const { createAttendee } = require('../controllers/attendee');
+const { 
+  getAllAttendees,
+  createAttendee
+} = require('../controllers/attendee');
 
 const router = Router();
+
+router.get('/', getAllAttendees);
 
 router.post('/', [
   check('name', 'Name is required').notEmpty(),
