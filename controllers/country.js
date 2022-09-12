@@ -14,7 +14,31 @@ const getAllCountries = async (req, res) => {
   res.status(200).json({
     countries
   });
-}
+};
+
+const getOneCountry = async (req, res) => {
+
+  let country;
+  const { id } = req.params;
+
+  try {
+    country = await Country.findById(id);
+  } catch (error) {
+    return res.status(500).json({
+      msg: 'Something went wrong, the server was unable to complete your request'
+    })
+  }
+
+  if (!country) {
+    return res.status(404).json({
+      msg: 'Category does not exist'
+    });
+  };
+
+  res.status(200).json({
+    country
+  });
+};
 
 const createCountry = async (req, res) => {
   
@@ -39,5 +63,6 @@ const createCountry = async (req, res) => {
 
 module.exports = {
   getAllCountries,
+  getOneCountry,
   createCountry
 }
