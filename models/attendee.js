@@ -21,7 +21,6 @@ const AttendeeSchema = Schema({
   },
   phone: {
     type: String,
-    unique: [true, 'Phone must be unique'],
     required: [true, 'Phone is required']
   },
   job: {
