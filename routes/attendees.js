@@ -5,7 +5,8 @@ const { validateFields } = require('../middlewares/validateFields');
 const { 
   getAllAttendees,
   getOneAttendee,
-  createAttendee
+  createAttendee,
+  updateAttendee
 } = require('../controllers/attendee');
 
 const router = Router();
@@ -28,5 +29,17 @@ router.post('/', [
   check('job', 'Job is required'),
   validateFields
 ], createAttendee);
+
+router.put('/:id', [
+  check('id', 'Id is not valid').isMongoId(),
+  check('name', 'Name is required').notEmpty(),
+  check('surname', 'Surname is required').notEmpty(),
+  check('email', 'Email is not valid').isEmail(),
+  check('country', 'Country is not valid').isMongoId(),
+  check('country').custom(countryExists),
+  check('phone', 'Phone must contain at least 10 digits').isNumeric().isLength({ min: 10 }),
+  check('job', 'Job is required'),
+  validateFields
+], updateAttendee);
 
 module.exports = router;
