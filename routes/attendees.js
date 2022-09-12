@@ -4,12 +4,18 @@ const { countryExists, emailExists } = require('../helpers/dbValidators');
 const { validateFields } = require('../middlewares/validateFields');
 const { 
   getAllAttendees,
+  getOneAttendee,
   createAttendee
 } = require('../controllers/attendee');
 
 const router = Router();
 
 router.get('/', getAllAttendees);
+
+router.get('/:id', [
+  check('id', 'Id is not valid').isMongoId(),
+  validateFields
+], getOneAttendee);
 
 router.post('/', [
   check('name', 'Name is required').notEmpty(),

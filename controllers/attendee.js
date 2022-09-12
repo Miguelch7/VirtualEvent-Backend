@@ -1,6 +1,7 @@
 const Attendee = require('../models/attendee');
 
 const getAllAttendees = async (req, res) => {
+
   let attendees = [];
 
   try {
@@ -14,6 +15,30 @@ const getAllAttendees = async (req, res) => {
 
   res.status(200).json({
     attendees
+  });
+};
+
+const getOneAttendee = async (req, res) => {
+
+  let attendee;
+  const { id } = req.params;
+
+  try {
+    attendee = await Attendee.findById(id).populate('country');
+  } catch (error) {
+    return res.status(500).json({
+      msg: 'Something went wrong, the server was unable to complete your request'
+    });
+  };
+
+  if (!attendee) {
+    return res.status(404).json({
+      msg: 'Attendee does not exist'
+    });
+  };
+
+  res.status(200).json({
+    attendee
   });
 };
 
@@ -44,5 +69,6 @@ const createAttendee = async (req, res) => {
 
 module.exports = {
   getAllAttendees,
+  getOneAttendee,
   createAttendee
 };
