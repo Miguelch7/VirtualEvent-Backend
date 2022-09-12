@@ -7,6 +7,10 @@ class Server {
     this.app = express();
     this.port = process.env.SERVER_PORT || 8080;
 
+    this.paths = {
+      countries: '/api/countries'
+    }
+
     this.connectDB();
     this.middlewares();
     this.routes();
@@ -17,11 +21,11 @@ class Server {
   }
 
   middlewares() {
-    // middlewares here
+    this.app.use(express.json());
   }
 
   routes() {
-    // routes here
+    this.app.use(this.paths.countries, require('../routes/countries'));
   }
 
   listen() {
