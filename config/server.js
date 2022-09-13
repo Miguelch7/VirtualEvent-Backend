@@ -1,4 +1,5 @@
 const express = require('express');
+const { dbConnection } = require('./db');
 
 class Server {
 
@@ -6,16 +7,27 @@ class Server {
     this.app = express();
     this.port = process.env.SERVER_PORT || 8080;
 
+    this.paths = {
+      attendees: '/api/attendees',
+      countries: '/api/countries'
+    }
+
+    this.connectDB();
     this.middlewares();
     this.routes();
   }
 
+  async connectDB() {
+    await dbConnection();
+  }
+
   middlewares() {
-    // middlewares here
+    this.app.use(express.json());
   }
 
   routes() {
-    // routes here
+    this.app.use(this.paths.attendees, require('../routes/attendees'));
+    this.app.use(this.paths.countries, require('../routes/countries'));
   }
 
   listen() {
