@@ -1,4 +1,5 @@
 const Attendee = require('../models/attendee');
+const { sendMail } = require('../helpers/sendMail');
 
 const getAllAttendees = async (req, res) => {
 
@@ -61,6 +62,9 @@ const createAttendee = async (req, res) => {
       msg: 'Something went wrong, the server was unable to complete your request'
     });
   };
+
+  // Send email
+  sendMail(name, email);
 
   res.status(201).json({
     attendee
