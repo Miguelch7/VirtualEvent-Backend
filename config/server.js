@@ -6,8 +6,8 @@ class Server {
 
   constructor() {
     this.app = express();
-    this.host = process.env.SERVER_HOST || '0.0.0.0';
-    this.port = process.env.SERVER_PORT || 8080;
+    this.host = process.env.HOST || '0.0.0.0';
+    this.port = process.env.PORT || 8080;
 
     this.paths = {
       attendees: '/api/attendees',
