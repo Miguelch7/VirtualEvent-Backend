@@ -6,6 +6,7 @@ class Server {
 
   constructor() {
     this.app = express();
+    this.host = process.env.SERVER_HOST || '0.0.0.0';
     this.port = process.env.SERVER_PORT || 8080;
 
     this.paths = {
@@ -33,7 +34,7 @@ class Server {
   }
 
   listen() {
-    this.app.listen(this.port, () => {
+    this.app.listen(this.port, this.host, () => {
       console.log('Server is running at ', this.port);
     });
   }
